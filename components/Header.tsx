@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
@@ -14,11 +14,31 @@ const links = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 glass backdrop-blur-md">
+    <header
+      ref={headerRef}
+      className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 glass backdrop-blur-md"
+    >
       <div className="section flex items-center justify-between !py-4">
-        <span className="font-semibold tracking-tight">Gui Leonel</span>
+        <span className="font-semibold tracking-tight">Guilherme Leonel</span>
 
         <nav className="hidden md:flex gap-6 text-sm text-gray-400">
           {links.map((l) => (
