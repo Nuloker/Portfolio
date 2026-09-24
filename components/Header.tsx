@@ -47,7 +47,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="md:hidden glassmorphism backdrop-blur-md border-t border-white/5">
+        <div className="md:hidden glass backdrop-blur-md border-t border-white/5">
           <nav className="flex flex-col gap-4 px-6 py-6 text-sm text-gray-300">
             {links.map((l) => (
               <Link
